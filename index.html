@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="calculator">
+        <div class="angle-mode" id="angleMode">RAD</div>
+        <div class="display-container">
+            <div class="expression" id="expression"></div>
+            <div class="display" id="display">0</div>
+        </div>
+        <div class="buttons">
+            <!-- First Row -->
+            <button class="btn clear" onclick="clearAll()">AC</button>
+            <button class="btn clear" onclick="clearEntry()">CE</button>
+            <button class="btn operator" onclick="deleteLast()">⌫</button>
+            <button class="btn memory" onclick="toggleAngleMode()">RAD/DEG</button>
+            <button class="btn memory" onclick="memoryStore()">MS</button>
+            <button class="btn memory" onclick="memoryRecall()">MR</button>
+            
+            <!-- Second Row -->
+            <button class="btn function" onclick="inputFunction('sin(')">sin</button>
+            <button class="btn function" onclick="inputFunction('cos(')">cos</button>
+            <button class="btn function" onclick="inputFunction('tan(')">tan</button>
+            <button class="btn function" onclick="inputFunction('log(')">log</button>
+            <button class="btn function" onclick="inputFunction('ln(')">ln</button>
+            <button class="btn operator" onclick="inputOperator('**')">x^y</button>
+            
+            <!-- Third Row -->
+            <button class="btn function" onclick="inputFunction('asin(')">asin</button>
+            <button class="btn function" onclick="inputFunction('acos(')">acos</button>
+            <button class="btn function" onclick="inputFunction('atan(')">atan</button>
+            <button class="btn function" onclick="inputFunction('sqrt(')">√</button>
+            <button class="btn function" onclick="inputFunction('exp(')">e^x</button>
+            <button class="btn operator" onclick="inputOperator('^')">x²</button>
+            
+            <!-- Fourth Row -->
+            <button class="btn" onclick="inputNumber('7')">7</button>
+            <button class="btn" onclick="inputNumber('8')">8</button>
+            <button class="btn" onclick="inputNumber('9')">9</button>
+            <button class="btn operator" onclick="inputOperator('/')">/</button>
+            <button class="btn function" onclick="inputConstant('π')">π</button>
+            <button class="btn function" onclick="inputConstant('e')">e</button>
+            
+            <!-- Fifth Row -->
+            <button class="btn" onclick="inputNumber('4')">4</button>
+            <button class="btn" onclick="inputNumber('5')">5</button>
+            <button class="btn" onclick="inputNumber('6')">6</button>
+            <button class="btn operator" onclick="inputOperator('*')">×</button>
+            <button class="btn function" onclick="inputOperator('!')" title="Factorial">n!</button>
+            <button class="btn operator" onclick="inputOperator('mod')">mod</button>
+            
+            <!-- Sixth Row -->
+            <button class="btn" onclick="inputNumber('1')">1</button>
+            <button class="btn" onclick="inputNumber('2')">2</button>
+            <button class="btn" onclick="inputNumber('3')">3</button>
+            <button class="btn operator" onclick="inputOperator('-')">-</button>
+            <button class="btn operator" onclick="inputOperator('(')">(</button>
+            <button class="btn operator" onclick="inputOperator(')')">)</button>
+            
+            <!-- Seventh Row -->
+            <button class="btn" onclick="inputNumber('0')">0</button>
+            <button class="btn" onclick="inputDecimal()">.</button>
+            <button class="btn operator" onclick="changeSign()">±</button>
+            <button class="btn operator" onclick="inputOperator('+')">+</button>
+            <button class="btn equals" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+   <script src="script.js"></script>
+</body>
+</html>
