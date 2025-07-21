@@ -29,3 +29,124 @@ body::before {
     pointer-events: none;
     z-index: -1;
 }
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+}
+
+.btn {
+    background: linear-gradient(145deg, #2a2a3e, #1e1e2e);
+    border: none;
+    border-radius: 16px;
+    color: #ffffff;
+    font-size: 1.1em;
+    font-weight: 500;
+    padding: 20px 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn:hover {
+    background: linear-gradient(145deg, #3a3a4e, #2e2e3e);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn.operator {
+    background: linear-gradient(145deg, #ff6b35, #e55a2b);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 
+        0 4px 15px rgba(255, 107, 53, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn.operator:hover {
+    background: linear-gradient(145deg, #ff7d47, #f06635);
+    box-shadow: 
+        0 8px 25px rgba(255, 107, 53, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.btn.equals {
+    background: linear-gradient(145deg, #00d4aa, #00b894);
+    grid-column: span 2;
+    font-size: 1.4em;
+    font-weight: 700;
+    box-shadow: 
+        0 4px 15px rgba(0, 212, 170, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn.equals:hover {
+    background: linear-gradient(145deg, #00e6bc, #00c9a0);
+    box-shadow: 
+        0 8px 25px rgba(0, 212, 170, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.btn.clear {
+    background: linear-gradient(145deg, #e17055, #d63031);
+    font-weight: 600;
+    box-shadow: 
+        0 4px 15px rgba(225, 112, 85, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn.clear:hover {
+    background: linear-gradient(145deg, #e84d67, #e84d67);
+    box-shadow: 
+        0 8px 25px rgba(225, 112, 85, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.btn.function {
+    background: linear-gradient(145deg, #6c5ce7, #5a4fcf);
+    font-size: 0.95em;
+    font-weight: 600;
+    box-shadow: 
+        0 4px 15px rgba(108, 92, 231, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn.function:hover {
+    background: linear-gradient(145deg, #7d6ce8, #6b5bd8);
+    box-shadow: 
+        0 8px 25px rgba(108, 92, 231, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.btn.memory {
+    background: linear-gradient(145deg, #fd79a8, #e84393);
+    font-size: 0.95em;
+    font-weight: 600;
+    box-shadow: 
+        0 4px 15px rgba(253, 121, 168, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn.memory:hover {
+    background: linear-gradient(145deg, #fd8bb4, #eb5aa0);
+    box-shadow: 
+        0 8px 25px rgba(253, 121, 168, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
