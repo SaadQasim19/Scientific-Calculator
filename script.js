@@ -103,3 +103,25 @@ function inputConstant(constant) {
     }
     lastWasOperator = false;
 }
+function clearAll() {
+    display.textContent = '0';
+    expression.textContent = '';
+    currentExpression = '';
+    shouldResetDisplay = false;
+    lastWasOperator = false;
+}
+
+function clearEntry() {
+    display.textContent = '0';
+    shouldResetDisplay = false;
+    lastWasOperator = false;
+}
+
+function deleteLast() {
+    if (display.textContent.length > 1) {
+        display.textContent = display.textContent.slice(0, -1);
+    } else {
+        display.textContent = '0';
+    }
+    lastWasOperator = false;
+}
