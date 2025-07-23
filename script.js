@@ -67,3 +67,39 @@ function inputOperator(op) {
     lastWasOperator = (op !== '(' && op !== ')');
     shouldResetDisplay = (op !== '(' && op !== ')');
 }
+function inputFunction(func) {
+    if (shouldResetDisplay || display.textContent === '0' || lastWasOperator) {
+        display.textContent = '';
+        currentExpression += func;
+        updateExpression(currentExpression);
+        shouldResetDisplay = false;
+    } else {
+        currentExpression += '*' + func;
+        updateExpression(currentExpression.replace(/\*/g, '×').replace(/\*\*/g, '^') + func);
+    }
+    lastWasOperator = false;
+}
+
+function inputConstant(constant) {
+    let value;
+    if (constant === 'π') {
+        value = Math.PI;
+        if (shouldResetDisplay || display.textContent === '0' || lastWasOperator) {
+            display.textContent = value.toFixed(8).replace(/\.?0+$/, '');
+            shouldResetDisplay = false;
+        } else {
+            currentExpression += display.textContent + '*';
+            display.textContent = value.toFixed(8).replace(/\.?0+$/, '');
+        }
+    } else if (constant === 'e') {
+        value = Math.E;
+        if (shouldResetDisplay || display.textContent === '0' || lastWasOperator) {
+            display.textContent = value.toFixed(8).replace(/\.?0+$/, '');
+            shouldResetDisplay = false;
+        } else {
+            currentExpression += display.textContent + '*';
+            display.textContent = value.toFixed(8).replace(/\.?0+$/, '');
+        }
+    }
+    lastWasOperator = false;
+}
