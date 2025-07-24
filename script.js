@@ -125,3 +125,46 @@ function deleteLast() {
     }
     lastWasOperator = false;
 }
+function changeSign() {
+    if (display.textContent !== '0') {
+        if (display.textContent.startsWith('-')) {
+            display.textContent = display.textContent.substring(1);
+        } else {
+            display.textContent = '-' + display.textContent;
+        }
+    }
+    lastWasOperator = false;
+}
+
+function toggleAngleMode() {
+    isRadians = !isRadians;
+    angleMode.textContent = isRadians ? 'RAD' : 'DEG';
+}
+
+function memoryStore() {
+    memory = parseFloat(display.textContent) || 0;
+}
+
+function memoryRecall() {
+    display.textContent = memory.toString();
+    shouldResetDisplay = true;
+    lastWasOperator = false;
+}
+
+function factorial(n) {
+    if (n < 0) return NaN;
+    if (n === 0 || n === 1) return 1;
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+function toRadians(degrees) {
+    return degrees * (Math.PI / 180);
+}
+
+function toDegrees(radians) {
+    return radians * (180 / Math.PI);
+}
