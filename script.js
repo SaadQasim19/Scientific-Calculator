@@ -271,3 +271,32 @@ function calculate() {
         lastWasOperator = false;
     }
 }
+
+document.addEventListener('keydown', function(event) {
+    const key = event.key;
+    event.preventDefault();
+    
+    if (key >= '0' && key <= '9') {
+        inputNumber(key);
+    } else if (key === '.') {
+        inputDecimal();
+    } else if (key === '+') {
+        inputOperator('+');
+    } else if (key === '-') {
+        inputOperator('-');
+    } else if (key === '*') {
+        inputOperator('*');
+    } else if (key === '/') {
+        inputOperator('/');
+    } else if (key === 'Enter' || key === '=') {
+        calculate();
+    } else if (key === 'Escape') {
+        clearAll();
+    } else if (key === 'Backspace') {
+        deleteLast();
+    } else if (key === '(') {
+        inputOperator('(');
+    } else if (key === ')') {
+        inputOperator(')');
+    }
+});
