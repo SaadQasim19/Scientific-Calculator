@@ -26,6 +26,7 @@ function inputNumber(num) {
     }
     lastWasOperator = false;
 }
+
 function inputDecimal() {
     if (shouldResetDisplay || lastWasOperator) {
         display.textContent = '0.';
@@ -67,6 +68,7 @@ function inputOperator(op) {
     lastWasOperator = (op !== '(' && op !== ')');
     shouldResetDisplay = (op !== '(' && op !== ')');
 }
+
 function inputFunction(func) {
     if (shouldResetDisplay || display.textContent === '0' || lastWasOperator) {
         display.textContent = '';
@@ -103,6 +105,7 @@ function inputConstant(constant) {
     }
     lastWasOperator = false;
 }
+
 function clearAll() {
     display.textContent = '0';
     expression.textContent = '';
@@ -125,6 +128,7 @@ function deleteLast() {
     }
     lastWasOperator = false;
 }
+
 function changeSign() {
     if (display.textContent !== '0') {
         if (display.textContent.startsWith('-')) {
@@ -272,6 +276,7 @@ function calculate() {
     }
 }
 
+// Keyboard support
 document.addEventListener('keydown', function(event) {
     const key = event.key;
     event.preventDefault();
