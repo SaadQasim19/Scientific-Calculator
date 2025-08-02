@@ -25,6 +25,10 @@ function inputNumber(num) {
         display.textContent += num;
     }
     lastWasOperator = false;
+    
+    console.log('inputNumber called with:', num);
+    console.log('display.textContent is now:', display.textContent);
+    console.log('currentExpression is:', currentExpression);
 }
 
 function inputDecimal() {
@@ -59,7 +63,6 @@ function inputOperator(op) {
             currentExpression = display.textContent;
         }
         
-        // Prevent consecutive operators
         if (!lastWasOperator || op === '(' || op === ')') {
             currentExpression += op;
             updateExpression(currentExpression.replace(/\*/g, '×').replace(/\*\*/g, '^'));
@@ -71,15 +74,19 @@ function inputOperator(op) {
 
 function inputFunction(func) {
     if (shouldResetDisplay || display.textContent === '0' || lastWasOperator) {
-        display.textContent = '';
-        currentExpression += func;
+        currentExpression += func + '(';
         updateExpression(currentExpression);
-        shouldResetDisplay = false;
+        display.textContent = '';
     } else {
-        currentExpression += '*' + func;
-        updateExpression(currentExpression.replace(/\*/g, '×').replace(/\*\*/g, '^') + func);
+        currentExpression += func + '(' + display.textContent + ')';
+        updateExpression(currentExpression.replace(/\*/g, '×').replace(/\*\*/g, '^'));
+        display.textContent = '';
     }
+    shouldResetDisplay = false;
     lastWasOperator = false;
+    
+    console.log('inputFunction called with:', func);
+    console.log('currentExpression is now:', currentExpression);
 }
 
 function inputConstant(constant) {
@@ -177,65 +184,45 @@ function calculate() {
     try {
         let expr = currentExpression;
         
-        // Add the current display value if we have one
         if (display.textContent && display.textContent !== '' && display.textContent !== 'Error') {
-            if (!lastWasOperator && currentExpression) {
+            if (!lastWasOperator) {
                 expr += display.textContent;
             } else if (!currentExpression) {
                 expr = display.textContent;
             }
         }
         
-        // If expression ends with an incomplete function, complete it with display value
-        if (expr.match(/(sin|cos|tan|asin|acos|atan|log|ln|sqrt|exp|factorial)\($/)) {
-            expr += display.textContent + ')';
+        console.log('Expression before processing:', expr);
+        
+        if (!expr || expr.trim() === '') {
+            return;
         }
         
-        // Handle special cases and clean up expression
         expr = expr.replace(/×/g, '*');
         expr = expr.replace(/÷/g, '/');
         
-        // Handle angle conversions for trig functions
-        if (!isRadians) {
-            expr = expr.replace(/sin\(/g, 'Math.sin(toRadians(');
-            expr = expr.replace(/cos\(/g, 'Math.cos(toRadians(');
-            expr = expr.replace(/tan\(/g, 'Math.tan(toRadians(');
-            expr = expr.replace(/asin\(/g, 'toDegrees(Math.asin(');
-            expr = expr.replace(/acos\(/g, 'toDegrees(Math.acos(');
-            expr = expr.replace(/atan\(/g, 'toDegrees(Math.atan(');
-            
-            // Fix parentheses for degree mode
-            expr = expr.replace(/Math\.sin\(toRadians\(([^)]+)\)\)/g, (match, content) => {
-                let parenCount = 0;
-                let endIndex = 0;
-                for (let i = 0; i < content.length; i++) {
-                    if (content[i] === '(') parenCount++;
-                    if (content[i] === ')') parenCount--;
-                    if (parenCount === 0) {
-                        endIndex = i;
-                        break;
-                    }
-                }
-                return 'Math.sin(toRadians(' + content + '))';
-            });
-            
-            expr = expr.replace(/Math\.cos\(toRadians\(([^)]+)\)\)/g, (match, content) => {
-                return 'Math.cos(toRadians(' + content + '))';
-            });
-            
-            expr = expr.replace(/Math\.tan\(toRadians\(([^)]+)\)\)/g, (match, content) => {
-                return 'Math.tan(toRadians(' + content + '))';
-            });
-        } else {
-            expr = expr.replace(/sin\(/g, 'Math.sin(');
-            expr = expr.replace(/cos\(/g, 'Math.cos(');
-            expr = expr.replace(/tan\(/g, 'Math.tan(');
-            expr = expr.replace(/asin\(/g, 'Math.asin(');
-            expr = expr.replace(/acos\(/g, 'Math.acos(');
-            expr = expr.replace(/atan\(/g, 'Math.atan(');
+        let openParens = (expr.match(/\(/g) || []).length;
+        let closeParens = (expr.match(/\)/g) || []).length;
+        if (openParens > closeParens) {
+            expr += ')'.repeat(openParens - closeParens);
         }
         
-        // Handle other functions
+        console.log('Expression after balancing parentheses:', expr);
+        
+        if (!isRadians) {
+            // Degree mode - convert input from degrees to radians for trig functions
+            expr = expr.replace(/(sin|cos|tan)\(([^)]*)\)/g, function(match, func, arg) {
+                return `Math.${func}(toRadians(${arg}))`;
+            });
+            // For inverse trig functions, convert output from radians to degrees
+            expr = expr.replace(/(asin|acos|atan)\(([^)]*)\)/g, function(match, func, arg) {
+                return `toDegrees(Math.${func}(${arg}))`;
+            });
+        } else {
+            // Radian mode - use Math functions directly
+            expr = expr.replace(/(sin|cos|tan|asin|acos|atan)\(/g, 'Math.$1(');
+        }
+        
         expr = expr.replace(/log\(/g, 'Math.log10(');
         expr = expr.replace(/ln\(/g, 'Math.log(');
         expr = expr.replace(/sqrt\(/g, 'Math.sqrt(');
@@ -243,7 +230,7 @@ function calculate() {
         expr = expr.replace(/factorial\(/g, 'factorial(');
         expr = expr.replace(/mod/g, '%');
         
-        console.log('Expression to evaluate:', expr); // Debug log
+        console.log('Expression to evaluate:', expr);
         
         let result = eval(expr);
         
@@ -251,7 +238,6 @@ function calculate() {
             throw new Error('Invalid calculation');
         }
         
-        // Format the result
         if (Math.abs(result) < 0.0000001 && result !== 0) {
             result = parseFloat(result.toExponential(6));
         } else if (Math.abs(result) > 999999999) {
@@ -267,7 +253,8 @@ function calculate() {
         lastWasOperator = false;
         
     } catch (error) {
-        console.error('Calculation error:', error); // Debug log
+        console.error('Calculation error:', error);
+        console.error('Final expression that failed:', expr);
         display.textContent = 'Error';
         expression.textContent = '';
         currentExpression = '';
@@ -276,7 +263,6 @@ function calculate() {
     }
 }
 
-// Keyboard support
 document.addEventListener('keydown', function(event) {
     const key = event.key;
     event.preventDefault();
